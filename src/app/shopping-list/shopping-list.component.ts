@@ -10,6 +10,10 @@ export class ShoppingListComponent {
   ingredients: Ingredient[] = [
     new Ingredient('Pasta', 1),
     new Ingredient('Spec', 5)
-  ];
+  ]
+
+  onIngredientAdded(ingredient: Ingredient) {
+    this.ingredients.push(ingredient)
+    }
 
 }
