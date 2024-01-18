@@ -1,16 +1,27 @@
-import { Component, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Recipe } from '../recipe.model';
 import { RecipeService } from '../recipe.service';
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-recipe-detail',
   templateUrl: './recipe-detail.component.html',
   styleUrl: './recipe-detail.component.css'
 })
-export class RecipeDetailComponent {
-  @Input() recipe: Recipe;
+export class RecipeDetailComponent implements OnInit {
+  recipe: Recipe;
+  name: string;
 
-  constructor(private recipeService: RecipeService) {}
+  constructor(private recipeService: RecipeService, private route: ActivatedRoute) {}
+
+  ngOnInit() {
+    this.route.params.subscribe(
+      (params: Params) => {
+        this.name = params['name']
+        this.recipe = this.recipeService.getRecipe(this.name)
+      }
+    )
+  }
 
   onToShoppingList() {
     this.recipeService.addToShoppingList(this.recipe.ingredients)
