@@ -29,7 +29,7 @@ export class ShoppingEditComponent {
     });
   }
 
-  onAddIngredient(form: NgForm) {
+  onSubmit(form: NgForm) {
     const value = form.value;
     const newIngredient = new Ingredient(value.name, value.amount);
     if (this.editMode) {
@@ -40,5 +40,17 @@ export class ShoppingEditComponent {
     } else {
       this.shoppingListService.addIngredientToList(newIngredient);
     }
+    this.editMode = false
+    form.reset()
+  }
+
+  onClear() {
+    this.shopListForm.reset()
+    this.editMode = false
+  }
+
+  onDelete() {
+    this.shoppingListService.deleteIngredient(this.editedItemId)
+    this.onClear()
   }
 }
