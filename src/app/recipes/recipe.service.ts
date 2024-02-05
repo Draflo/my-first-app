@@ -8,26 +8,32 @@ import { Subject } from 'rxjs';
 export class RecipeService {
   recipesChanged = new Subject<Recipe[]>
 
-  private recipes: Recipe[] = [
-    new Recipe(
-      'carFlo',
-      'Des carbo spécial Flo',
-      'https://img.cuisineaz.com/660x660/2023/04/11/i192604-pates-a-la-carbonara.jpg',
-      [
-        new Ingredient('Pasta', 3),
-        new Ingredient('Spec', 2),
-        new Ingredient('Eggs', 1),
-      ]
-    ),
-    new Recipe(
-      'Tartare',
-      'De la bonne viande',
-      'https://assets.afcdn.com/recipe/20211130/125060_w1024h1024c1cx827cy763cxt0cyt0cxb2120cyb1414.jpg',
-      [new Ingredient('Meat', 3)]
-    )
-  ];
+  // private recipes: Recipe[] = [
+  //   new Recipe(
+  //     'carFlo',
+  //     'Des carbo spécial Flo',
+  //     'https://img.cuisineaz.com/660x660/2023/04/11/i192604-pates-a-la-carbonara.jpg',
+  //     [
+  //       new Ingredient('Pasta', 3),
+  //       new Ingredient('Spec', 2),
+  //       new Ingredient('Eggs', 1),
+  //     ]
+  //   ),
+  //   new Recipe(
+  //     'Tartare',
+  //     'De la bonne viande',
+  //     'https://assets.afcdn.com/recipe/20211130/125060_w1024h1024c1cx827cy763cxt0cyt0cxb2120cyb1414.jpg',
+  //     [new Ingredient('Meat', 3)]
+  //   )
+  // ];
+  private recipes: Recipe[] = []
 
   constructor(private shoppingListService: ShoppingListService) {}
+
+  setRecipes(recipes: Recipe[]) {
+    this.recipes = recipes
+    this.recipesChanged.next(this.recipes.slice())
+  }
 
   getRecipes() {
     return this.recipes.slice();
