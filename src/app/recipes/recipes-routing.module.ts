@@ -1,0 +1,36 @@
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from '../auth/auth.guard';
+import { NoRecipeComponent } from './no-recipe/no-recipe.component';
+import { RecipeDetailComponent } from './recipe-detail/recipe-detail.component';
+import { RecipeEditComponent } from './recipe-edit/recipe-edit.component';
+import { RecipeResolverService } from './recipes-resolver.service';
+import { RecipesComponent } from './recipes.component';
+
+const routes: Routes = [
+  {
+    path: '',
+    component: RecipesComponent,
+    canActivate: [AuthGuard],
+    children: [
+      { path: '', component: NoRecipeComponent },
+      { path: 'new', component: RecipeEditComponent },
+      {
+        path: ':name',
+        component: RecipeDetailComponent,
+        resolve: { recipe: RecipeResolverService },
+      },
+      {
+        path: ':name/edit',
+        component: RecipeEditComponent,
+        resolve: { recipe: RecipeResolverService },
+      },
+    ],
+  },
+];
+
+@NgModule({
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule]
+})
+export class RecipesRoutingModule {}
